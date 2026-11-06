@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cockpit Financeiro Lite · Planilha gratuita para organizar seu dinheiro</title>
-<meta name="description" content="Planilha gratuita para Google Sheets: lance seus gastos, veja o raio-X do mês e descubra o próximo passo para organizar suas finanças.">
+<title>Descubra para onde está indo o seu dinheiro · Cockpit Financeiro Lite</title>
+<meta name="description" content="Planilha gratuita para Google Sheets: veja o raio-X do seu mês e descubra para onde está indo o seu dinheiro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -38,7 +38,7 @@ button:disabled{opacity:.6;cursor:wait}
 .err{color:var(--red);font-size:13px;min-height:18px;margin-top:8px}
 .micro{font-size:12px;color:var(--soft);text-align:center;margin-top:10px}
 #ok{display:none;text-align:center}#ok h2{color:var(--em)}
-#ok .btn{display:block;margin-top:16px;padding:14px;border-radius:9px;background:var(--em);color:var(--n950);font-weight:700;text-decoration:none}
+#ok .btn{display:block;margin-top:16px;padding:14px;border-radius:9px;background:var(--em);color:var(--n950);font-weight:700;text-decoration:none}#ok .wa{background:#25d366;color:#06301f}
 section{padding:56px 0}
 h3.t{font:600 clamp(26px,3.5vw,36px)/1.2 Fraunces,Georgia,serif;color:#fff;margin-bottom:28px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
@@ -60,9 +60,9 @@ footer{border-top:1px solid var(--n700);padding:28px 0;color:var(--soft);font-si
 <section class="hero"><div class="wrap">
   <div>
     <span class="badge">● Planilha gratuita · Google Sheets</span>
-    <h1>Descubra para onde vai o seu dinheiro em <em>7 dias</em>.</h1>
-    <p class="lead"><b>Você é o piloto.</b> O Cockpit Financeiro Lite reúne os instrumentos para organizar seus gastos, ver o raio-X do mês e saber qual é o próximo passo. Primeiro organize suas finanças, depois conquiste sua liberdade financeira.</p>
-    <div class="proof"><div><b>3 min</b>para configurar</div><div><b>50/30/20</b>orçamento guiado</div><div><b>Grátis</b>sem cartão</div></div>
+    <h1>Descubra para onde <em>está indo</em> o seu dinheiro.</h1>
+    <p class="lead"><b>Você é o piloto.</b> Em poucos minutos por dia, o Cockpit Financeiro Lite mostra o raio-X do seu mês e indica o próximo passo. Use por 7 dias e veja os seus números reais. Primeiro organize suas finanças, depois conquiste sua liberdade financeira.</p>
+    <div class="proof"><div><b>7 dias</b>para o 1º raio-X real</div><div><b>50/30/20</b>orçamento guiado</div><div><b>Grátis</b>sem cartão</div></div>
   </div>
   <div class="card" id="captura">
     <form id="f" novalidate>
@@ -90,6 +90,8 @@ footer{border-top:1px solid var(--n700);padding:28px 0;color:var(--soft);font-si
       <p class="s" style="margin-top:8px">Enviamos o link para o seu e-mail (veja também a caixa de spam). Se preferir, abra agora:</p>
       <a class="btn" id="lnk" href="#" target="_blank" rel="noopener">Abrir minha planilha</a>
       <p class="micro">Dica: no Google Sheets, vá em Arquivo › Fazer uma cópia para ter a sua.</p>
+      <p class="s" style="margin-top:18px">Quer tirar dúvidas ou receber dicas? Toque abaixo: já abre a conversa comigo, sem digitar número.</p>
+      <a class="btn wa" id="wa" href="#" target="_blank" rel="noopener">Falar comigo no WhatsApp</a>
     </div>
   </div>
 </div></section>
@@ -140,6 +142,7 @@ footer{border-top:1px solid var(--n700);padding:28px 0;color:var(--soft);font-si
 <script>
 // ===== CONFIGURE AQUI =====
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbxrhv8HpOIHMWAQtHUi03ZJ0YKDi0hHIOt6lRGlpzOqeE1vBXPH1kQFEK9rGMkPxW7Nwg/exec";   // URL do app da web (ver apps_script.gs)
+const WHATSAPP = "5554999959755";   // número com 55 + DDD, sem espaços
 const SHEET_LINK = "https://docs.google.com/spreadsheets/d/1CZcP1PDqdtDfVPnSKig_M3CbQFoojfut/copy";
 // ==========================
 const $ = id => document.getElementById(id);
@@ -167,6 +170,8 @@ f.addEventListener("submit", async e => {
   try {
     await fetch(ENDPOINT, { method: "POST", mode: "no-cors", body });
     f.style.display = "none"; $("ok").style.display = "block"; $("lnk").href = SHEET_LINK;
+    const msg = "Olá, Delber! Sou " + nome.split(" ")[0] + ". Baixei a planilha Cockpit Financeiro Lite. Meu maior desafio: " + $("desafio").value + ".";
+    $("wa").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
   } catch (x) {
     err.textContent = "Não foi possível enviar agora. Tente novamente em instantes.";
     btn.disabled = false; btn.textContent = "Quero minha planilha grátis";

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit Financeiro Lite · Planilha gratuita para organizar seu dinheiro</title>
+<meta name="description" content="Planilha gratuita para Google Sheets: lance seus gastos, veja o raio-X do mês e descubra o próximo passo para organizar suas finanças.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--n950:#060f1c;--n900:#0a1628;--n800:#122036;--n700:#1a2a4a;--em:#0ecb81;--g5:#f5a623;--g4:#ffc34d;--paper:#f4f1e8;--red:#ff6b63;--txt:#e8edf5;--soft:#a9b6c9;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 Inter,system-ui,sans-serif;background:var(--n900);color:var(--txt);-webkit-font-smoothing:antialiased}
+a{color:var(--g4)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--n700);padding:16px 0}
+.logo{font:600 20px Fraunces,Georgia,serif;color:#fff}.logo span{color:var(--g4)}
+.hero{padding:56px 0 40px;background:radial-gradient(900px 400px at 85% 0,#0b3a2c55,transparent),var(--n900)}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+.badge{display:inline-block;font:600 12px ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--g4);border:1px solid var(--n700);border-radius:99px;padding:6px 14px;margin-bottom:20px}
+h1{font:600 clamp(34px,5vw,54px)/1.1 Fraunces,Georgia,serif;color:#fff;margin-bottom:18px}
+h1 em{color:var(--g4)}
+.lead{color:var(--soft);font-size:18px;max-width:34em}.lead b{color:#fff}
+.proof{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;color:var(--soft);font-size:14px}
+.proof b{display:block;color:var(--g4);font:600 22px Fraunces,Georgia,serif}
+.card{background:var(--n800);border:1px solid var(--n700);border-radius:14px;padding:26px;box-shadow:0 20px 50px #0006}
+.card h2{font:600 22px Fraunces,Georgia,serif;color:#fff;margin-bottom:4px}
+.card p.s{color:var(--soft);font-size:14px;margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+input[type=text],input[type=email],input[type=tel],select{width:100%;padding:12px 13px;border-radius:8px;border:1px solid var(--n700);background:var(--n950);color:#fff;font:inherit}
+input:focus,select:focus{outline:2px solid var(--g5);border-color:var(--g5)}
+.hp{position:absolute;left:-9999px}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:16px 0 4px;font-size:12.5px;color:var(--soft);font-weight:400}
+.chk input{margin-top:3px;accent-color:var(--g5);width:18px;height:18px;flex:none}
+button{width:100%;margin-top:14px;padding:15px;border:0;border-radius:9px;background:linear-gradient(var(--g4),var(--g5));color:var(--n900);font:700 17px Inter,sans-serif;cursor:pointer;box-shadow:0 6px 20px #f5a62340}
+button:disabled{opacity:.6;cursor:wait}
+.err{color:var(--red);font-size:13px;min-height:18px;margin-top:8px}
+.micro{font-size:12px;color:var(--soft);text-align:center;margin-top:10px}
+#ok{display:none;text-align:center}#ok h2{color:var(--em)}
+#ok .btn{display:block;margin-top:16px;padding:14px;border-radius:9px;background:var(--em);color:var(--n950);font-weight:700;text-decoration:none}
+section{padding:56px 0}
+h3.t{font:600 clamp(26px,3.5vw,36px)/1.2 Fraunces,Georgia,serif;color:#fff;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.it{background:var(--n800);border:1px solid var(--n700);border-radius:12px;padding:20px}
+.it .i{font-size:24px}.it h4{color:#fff;margin:8px 0 4px;font-size:16px}.it p{color:var(--soft);font-size:14px}
+.alt{background:var(--n950)}
+.step b{font:600 34px Fraunces,Georgia,serif;color:var(--g4)}
+details{background:var(--n800);border:1px solid var(--n700);border-radius:10px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600;color:#fff}details p{color:var(--soft);margin-top:10px;font-size:15px}
+.priv{font-size:14px;color:var(--soft)}.priv h4{color:#fff;margin:16px 0 4px}.priv ul{padding-left:20px}
+footer{border-top:1px solid var(--n700);padding:28px 0;color:var(--soft);font-size:13px}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.hero{padding-top:36px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="logo">✈ Cockpit <span>Financeiro</span></div></div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="badge">● Planilha gratuita · Google Sheets</span>
+    <h1>Descubra para onde vai o seu dinheiro em <em>7 dias</em>.</h1>
+    <p class="lead"><b>Você é o piloto.</b> O Cockpit Financeiro Lite reúne os instrumentos para organizar seus gastos, ver o raio-X do mês e saber qual é o próximo passo. Primeiro organize suas finanças, depois conquiste sua liberdade financeira.</p>
+    <div class="proof"><div><b>3 min</b>para configurar</div><div><b>50/30/20</b>orçamento guiado</div><div><b>Grátis</b>sem cartão</div></div>
+  </div>
+  <div class="card" id="captura">
+    <form id="f" novalidate>
+      <h2>Receba a planilha agora</h2>
+      <p class="s">Preencha e enviamos o link para o seu e-mail.</p>
+      <label for="nome">Seu nome</label><input type="text" id="nome" name="nome" autocomplete="given-name" required>
+      <label for="email">E-mail</label><input type="email" id="email" name="email" autocomplete="email" required>
+      <label for="wpp">WhatsApp (com DDD)</label><input type="tel" id="wpp" name="whatsapp" autocomplete="tel" placeholder="(54) 99999-9999" required>
+      <label for="desafio">Qual é o seu maior desafio hoje?</label>
+      <select id="desafio" name="desafio" required>
+        <option value="">Escolha uma opção</option>
+        <option>Estou endividado(a) e preciso sair do vermelho</option>
+        <option>Não sobra dinheiro no fim do mês</option>
+        <option>Não sei para onde vai o meu dinheiro</option>
+        <option>Quero começar a investir</option>
+      </select>
+      <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="chk" for="ok_lgpd"><input type="checkbox" id="ok_lgpd" required><span>Autorizo o envio da planilha e de conteúdos e ofertas do Cockpit Financeiro por e-mail e WhatsApp. Posso cancelar quando quiser. Li a <a href="#privacidade">Política de Privacidade</a>.</span></label>
+      <div class="err" id="err" role="alert"></div>
+      <button type="submit" id="btn">Quero minha planilha grátis</button>
+      <p class="micro">Sem spam. Para sair, responda SAIR ou clique em descadastrar.</p>
+    </form>
+    <div id="ok">
+      <h2>Pronto! Planilha liberada ✔</h2>
+      <p class="s" style="margin-top:8px">Enviamos o link para o seu e-mail (veja também a caixa de spam). Se preferir, abra agora:</p>
+      <a class="btn" id="lnk" href="#" target="_blank" rel="noopener">Abrir minha planilha</a>
+      <p class="micro">Dica: no Google Sheets, vá em Arquivo › Fazer uma cópia para ter a sua.</p>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h3 class="t">O que você recebe</h3>
+  <div class="grid">
+    <div class="it"><div class="i">🧾</div><h4>Lançamentos simples</h4><p>Data, categoria, descrição e valor. A planilha entende sozinha o que é receita, despesa ou valor guardado.</p></div>
+    <div class="it"><div class="i">🎯</div><h4>Orçamento com meta</h4><p>Veja onde você passou do limite, com semáforo e a regra 50/30/20 adaptável à sua realidade.</p></div>
+    <div class="it"><div class="i">📊</div><h4>Painel do mês</h4><p>Receitas, despesas, quanto guardou e a sua taxa de poupança, com gráficos e o próximo passo.</p></div>
+    <div class="it"><div class="i">🗓️</div><h4>Visão dos 12 meses</h4><p>Acompanhe a evolução do ano e perceba o padrão dos seus gastos.</p></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h3 class="t">Como funciona</h3>
+  <div class="grid">
+    <div class="step"><b>1</b><h4>Faça sua cópia</h4><p style="color:var(--soft)">Abra o link e vá em Arquivo › Fazer uma cópia. Seus dados ficam só com você.</p></div>
+    <div class="step"><b>2</b><h4>Lance seus gastos</h4><p style="color:var(--soft)">Anote entradas e saídas por 7 dias. Leva poucos minutos por dia.</p></div>
+    <div class="step"><b>3</b><h4>Leia o painel</h4><p style="color:var(--soft)">Descubra para onde vai o dinheiro e siga o próximo passo indicado.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap" style="max-width:760px">
+  <h3 class="t">Perguntas frequentes</h3>
+  <details><summary>É realmente gratuita?</summary><p>Sim. A versão Lite é gratuita. Existe uma versão completa, paga, com reserva de emergência, plano de quitação de dívidas, conferência de caixa e carteira de investimentos, mas você só compra se quiser.</p></details>
+  <details><summary>Preciso saber Excel ou fórmulas?</summary><p>Não. Você só digita nas células de fundo claro. Os cálculos já vêm prontos.</p></details>
+  <details><summary>Funciona no celular?</summary><p>Sim, pelo aplicativo Google Planilhas. Para a configuração inicial, o computador é mais confortável.</p></details>
+  <details><summary>Meus dados ficam seguros?</summary><p>A planilha é uma cópia sua, no seu Google Drive. Nós não temos acesso aos valores que você lança.</p></details>
+  <details><summary>Isso é recomendação de investimento?</summary><p>Não. É uma ferramenta de organização financeira, sem consultoria nem indicação de compra ou venda de ativos.</p></details>
+</div></section>
+
+<section class="alt" id="privacidade"><div class="wrap priv" style="max-width:760px">
+  <h3 class="t">Política de Privacidade</h3>
+  <p>Esta política explica como tratamos seus dados pessoais, conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
+  <h4>Quem é o controlador</h4><p>Delber Dallegrave · contato: <a href="mailto:delber.dallegrave@gmail.com">delber.dallegrave@gmail.com</a></p>
+  <h4>Quais dados coletamos</h4><ul><li>Nome, e-mail e número de WhatsApp informados no formulário.</li><li>Sua resposta sobre o maior desafio financeiro.</li><li>Origem do acesso (parâmetros UTM) e data e hora do cadastro.</li></ul>
+  <h4>Para que usamos</h4><p>Enviar a planilha, entrar em contato com conteúdos e ofertas dos produtos Cockpit e adaptar a comunicação ao seu desafio. A base legal é o seu consentimento.</p>
+  <h4>Com quem compartilhamos</h4><p>Não vendemos seus dados. Usamos serviços de terceiros para operar: armazenamento e envio de e-mail (Google) e, se você comprar, a plataforma de pagamento (Hotmart).</p>
+  <h4>Por quanto tempo guardamos</h4><p>Enquanto você não revogar o consentimento, ou por até 24 meses sem interação.</p>
+  <h4>Seus direitos</h4><p>Você pode pedir confirmação de tratamento, acesso, correção, exclusão e portabilidade dos dados e revogar o consentimento a qualquer momento, por e-mail ou respondendo SAIR no WhatsApp.</p>
+  <p style="margin-top:16px;font-size:12px">Última atualização: novembro de 2026. Modelo informativo: recomenda-se revisão por profissional jurídico antes da publicação.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Cockpit Financeiro. Ferramenta de organização financeira, sem consultoria nem recomendação de investimento. Os dados de exemplo da planilha são fictícios.</div></footer>
+
+<script>
+// ===== CONFIGURE AQUI =====
+const ENDPOINT = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";   // URL do app da web (ver apps_script.gs)
+const SHEET_LINK = "COLE_AQUI_O_LINK_/copy_DA_PLANILHA_LITE";
+// ==========================
+const $ = id => document.getElementById(id);
+const f = $("f"), err = $("err"), btn = $("btn");
+$("wpp").addEventListener("input", e => {
+  let d = e.target.value.replace(/\D/g, "").slice(0, 11), o = d;
+  if (d.length > 2) o = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + (d.length > (d.length > 10 ? 7 : 6) ? "-" + d.slice(d.length > 10 ? 7 : 6) : "");
+  e.target.value = o;
+});
+f.addEventListener("submit", async e => {
+  e.preventDefault(); err.textContent = "";
+  const nome = $("nome").value.trim(), email = $("email").value.trim(), wpp = $("wpp").value.replace(/\D/g, "");
+  if (f.site.value) return;
+  if (nome.length < 2) return err.textContent = "Informe seu nome.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return err.textContent = "Informe um e-mail válido.";
+  if (wpp.length < 10) return err.textContent = "Informe o WhatsApp com DDD.";
+  if (!$("desafio").value) return err.textContent = "Escolha o seu maior desafio.";
+  if (!$("ok_lgpd").checked) return err.textContent = "Para receber a planilha, é preciso autorizar o contato.";
+  btn.disabled = true; btn.textContent = "Enviando…";
+  const q = new URLSearchParams(location.search), body = new URLSearchParams({
+    nome, email, whatsapp: wpp, desafio: $("desafio").value, consentimento: "sim",
+    texto_consentimento: "v1-2026-11", pagina: location.href.split("?")[0],
+    utm_source: q.get("utm_source") || "", utm_medium: q.get("utm_medium") || "", utm_campaign: q.get("utm_campaign") || ""
+  });
+  try {
+    await fetch(ENDPOINT, { method: "POST", mode: "no-cors", body });
+    f.style.display = "none"; $("ok").style.display = "block"; $("lnk").href = SHEET_LINK;
+  } catch (x) {
+    err.textContent = "Não foi possível enviar agora. Tente novamente em instantes.";
+    btn.disabled = false; btn.textContent = "Quero minha planilha grátis";
+  }
+});
+</script>
+</body>
+</html>
